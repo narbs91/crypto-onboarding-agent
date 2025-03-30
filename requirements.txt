@@ -1,0 +1,9 @@
+openai>=1.12.0
+openai-agents==0.0.6
+python-dotenv>=1.0.0 
+eth-account
+web3
+python-dotenv
+requests
+rich>=13.7.0
+bitcoinlib>=0.6.13
