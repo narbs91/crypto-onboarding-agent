@@ -10,7 +10,7 @@ This repo represents the foundations for a simple, yet powerful agent who can be
 - 📚 Educational explanations of crypto concepts
 - 🔄 AI inference powered by Lilypad's Anura API and Ollama
 
-You can read how I built this by reading the accompanying blog post I wrote
+You can read how I built this by reading the [accompanying blog post](https://narb.hashnode.dev/creating-an-ai-agent-to-help-solve-the-crypto-ux-problem) I wrote
 
 ## Setup
 
