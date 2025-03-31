@@ -13,7 +13,7 @@ from bitcoinlib.wallets import Wallet, wallet_delete_if_exists
 from bitcoinlib.mnemonic import Mnemonic
 
 # Load environment variables
-load_dotenv()
+load_dotenv(override=True)
 # This is for debugging and we don't need it for the agent
 set_tracing_disabled(True)
 
