@@ -1,7 +1,7 @@
 import os
 import asyncio
 from eth_account import Account
-from web3 import Web3
+from web3 import AsyncWeb3
 from dotenv import load_dotenv
 from agents import Agent, Runner, set_default_openai_api, set_default_openai_client, set_tracing_disabled, function_tool
 from openai import AsyncOpenAI
@@ -14,6 +14,7 @@ from bitcoinlib.mnemonic import Mnemonic
 
 # Load environment variables
 load_dotenv()
+# This is for debugging and we don't need it for the agent
 set_tracing_disabled(True)
 
 # Initialize Rich console for better formatting
@@ -94,8 +95,10 @@ def get_eth_wallet_private_key() -> str:
     return ethWalletInfo.get("private_key", "No Ethereum wallet created yet")
 
 @function_tool
-def get_eth_wallet_balance() -> str:
-    return ethWalletInfo.get("balance", "No Ethereum wallet created yet")
+async def get_eth_wallet_balance(address: str) -> str:
+    w3 = AsyncWeb3(AsyncWeb3.AsyncHTTPProvider(os.getenv("ETH_RPC_URL")))
+    balance = await w3.eth.get_balance(address)
+    return f"{balance / 10**18:.4f} ETH"
 
 @function_tool
 def get_eth_price() -> str:
