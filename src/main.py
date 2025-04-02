@@ -11,6 +11,9 @@ from rich.markdown import Markdown
 from rich.prompt import Prompt
 from bitcoinlib.wallets import Wallet, wallet_delete_if_exists
 from bitcoinlib.mnemonic import Mnemonic
+from bs4 import BeautifulSoup
+import lxml_html_clean
+from readability import Document
 
 # Load environment variables
 load_dotenv(override=True)
@@ -122,6 +125,14 @@ def get_btc_price() -> str:
     data = response.json()
     return data.get("bitcoin", {}).get("usd", "Price not found")
 
+@function_tool
+def get_webpage_content(url: str) -> str:
+    response = requests.get(url)
+    doc = Document(response.text)
+    html = doc.summary()
+    soup = BeautifulSoup(html, 'html.parser')
+    return soup.get_text()
+
 def print_welcome_message():
     console.print("""
 [bold blue]Welcome to the Crypto Assistant![/bold blue]
@@ -167,6 +178,9 @@ async def chat_loop():
         3. Price Checking:
            - Use get_eth_price to get ETH price
            - Use get_btc_price to get BTC price
+           
+        4. Webpage Content:
+           - Use get_webpage_content to get the content of a webpage
         
         Important notes:
         - Always warn users to keep their private keys and mnemonics secure
@@ -185,7 +199,7 @@ async def chat_loop():
         tools=[
             create_eth_wallet, get_eth_wallet_address, get_eth_wallet_private_key, get_eth_wallet_balance,
             create_btc_wallet, get_btc_wallet_address, get_btc_wallet_mnemonic, get_btc_wallet_balance,
-            get_eth_price, get_btc_price
+            get_eth_price, get_btc_price, get_webpage_content
         ]
     )
 

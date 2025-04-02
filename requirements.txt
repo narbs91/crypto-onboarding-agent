@@ -7,3 +7,6 @@ python-dotenv
 requests
 rich>=13.7.0
 bitcoinlib>=0.6.13
+beautifulsoup4
+readability-lxml
+lxml_html_clean
